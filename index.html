@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="contailner" style="display: grid; grid-template-columns: repeat(4,1fr); gap: 8px;"></div>
+
+</body>
+</html>
+
+<script>
+    function getting_data_from_server() {
+        fetch('https://fakestoreapi.com/products')
+    .then((res)=>{
+        return res.json();
+    }).then((data)=>{
+        console.log(data);
+        ContainerItems(data);
+    }).catch((err)=>{
+        console.log(err);
+    });
+
+    }
+    getting_data_from_server()
+
+    
+
+    function CreateDiv(id,image,title,catagory,price,description) {
+        let Div = `<div style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; text-align: center;">
+        <p>${id}</p>
+        <img src=${image} height="250" alt="">
+        <h3>${title}</h3>
+        <h3>${catagory}</h3>
+        <h3>${price}</h3>
+        <p>${description}</p>
+        </div>`
+        return Div
+    }
+
+    function ContainerItems(data) {
+
+        const containersData = data.map((el)=>CreateDiv(el.id,el.image,el.title,el.catagory,el.price,el.description))
+
+        document.getElementById('contailner').innerHTML = containersData.join('');
+    } 
+
+
+
+</script>
